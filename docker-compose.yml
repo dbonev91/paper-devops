@@ -1,0 +1,43 @@
+version: "3"
+services:
+  paper-ebook-admin-be:
+    container_name: paper-ebook-admin-be
+    image: latest123/paper-ebook-admin-be
+    restart: always
+    build:
+      context: ../paper-ebook-admin-be
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - "3011:3011"
+    links:
+      - paper-ebook-repository
+      - paper-mongodb-crud
+  paper-ebook-repository:
+    container_name: paper-ebook-repository
+    image: latest123/paper-ebook-repository
+    volumes:
+      - ./data:/data/ebook=repository
+    restart: always
+    build:
+      context: ../paper-ebook-repository
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - "3012:3012"
+  paper-mongodb-crud:
+    container_name: paper-mongodb-crud
+    image: latest123/paper-mongodb-crud
+    restart: always
+    build:
+      context: ../paper-mongodb-crud
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - "3005:3005"
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - '27017:27017'
