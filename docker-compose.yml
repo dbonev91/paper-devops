@@ -1,5 +1,14 @@
 version: "3"
 services:
+  paper-web-app:
+    container_name: paper-web-app
+    image: latest123/paper-web-app
+    restart: always
+    build:
+      context: ../paper-web-app
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - "8080:80"
   paper-ebook-admin-be:
     container_name: paper-ebook-admin-be
     image: latest123/paper-ebook-admin-be
@@ -31,13 +40,15 @@ services:
       context: ../paper-mongodb-crud
       dockerfile: ./docker/dev/Dockerfile
     ports:
-      - "3005:3005"
+      - "3015:3015"
     links:
       - mongo
+    # environment:
+    #   - BLURPAPER_MONGO_SSL_PATH=undefined
   mongo:
     container_name: mongo
     image: mongo
     volumes:
       - ./data:/data/db
     ports:
-      - '27017:27017'
+      - '27019:27017'
