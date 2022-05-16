@@ -1,5 +1,20 @@
 version: "3"
 services:
+  # nginx:
+  #   container_name: paper-nginx
+  #   image: latest123/paper-nginx
+  #   restart: always
+  #   build:
+  #     context: ../paper-web-app
+  #     dockerfile: ./docker/dev/Dockerfile
+    # volumes:
+    #   - ./data/certbot/conf:/etc/letsencrypt
+    #   - ./data/certbot/www:/var/www/certbot
+  # certbot:
+  #   image: certbot/certbot
+  #   volumes:
+  #     - ./data/certbot/conf:/etc/letsencrypt
+  #     - ./data/certbot/www:/var/www/certbot
   paper-web-app:
     container_name: paper-web-app
     image: latest123/paper-web-app
@@ -8,7 +23,7 @@ services:
       context: ../paper-web-app
       dockerfile: ./docker/dev/Dockerfile
     ports:
-      - "8080:80"
+      - "8090:80"
   paper-ebook-admin-be:
     container_name: paper-ebook-admin-be
     image: latest123/paper-ebook-admin-be
