@@ -1,20 +1,11 @@
 version: "3"
 services:
-  # nginx:
-  #   container_name: paper-nginx
-  #   image: latest123/paper-nginx
-  #   restart: always
-  #   build:
-  #     context: ../paper-web-app
-  #     dockerfile: ./docker/dev/Dockerfile
-    # volumes:
-    #   - ./data/certbot/conf:/etc/letsencrypt
-    #   - ./data/certbot/www:/var/www/certbot
-  # certbot:
-  #   image: certbot/certbot
-  #   volumes:
-  #     - ./data/certbot/conf:/etc/letsencrypt
-  #     - ./data/certbot/www:/var/www/certbot
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
   paper-web-app:
     container_name: paper-web-app
     image: latest123/paper-web-app
@@ -24,6 +15,11 @@ services:
       dockerfile: ./docker/dev/Dockerfile
     ports:
       - "8090:80"
+      - "8092:8092"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   paper-ebook-admin-be:
     container_name: paper-ebook-admin-be
     image: latest123/paper-ebook-admin-be
