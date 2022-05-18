@@ -54,8 +54,11 @@ services:
       - "3015:3015"
     links:
       - mongo
-    # environment:
-    #   - BLURPAPER_MONGO_SSL_PATH=undefined
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    environment:
+      - BLURPAPER_MONGO_SSL_PATH=undefinedd
+      - BLURPAPER_ORIGIN=blurpaper.com
   mongo:
     container_name: mongo
     image: mongo
