@@ -51,14 +51,14 @@ services:
       context: ../paper-mongodb-crud
       dockerfile: ./docker/dev/Dockerfile
     ports:
-      - "3015:3015"
+      - ${PAPER_CRUD_PORT}:5005
     links:
       - mongo
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
-    environment:
-      - BLURPAPER_MONGO_SSL_PATH=undefinedd
-      - BLURPAPER_ORIGIN=blurpaper.com
+    # environment:
+    #   - BLURPAPER_MONGO_SSL_PATH=undefinedd
+    #   - BLURPAPER_ORIGIN=blurpaper.com
   mongo:
     container_name: mongo
     image: mongo
