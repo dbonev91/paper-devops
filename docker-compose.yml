@@ -21,7 +21,7 @@ services:
       - ./data/certbot/www:/var/www/certbot
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   paper-ebook-admin-be:
-    container_name: paper-ebook-admin-be
+    container_name: ${PAPER_EBOOK_ADMIN_BE_CONTAINER_NAME}
     image: latest123/paper-ebook-admin-be
     restart: always
     build:
@@ -30,35 +30,50 @@ services:
     ports:
       - "3011:3011"
     links:
-      - paper-ebook-repository
-      - paper-mongodb-crud
+      - ${PAPER_EBOOK_REPO_CONTAINER_NAME}
+      - ${PAPER_CRUD_CONTAINER_NAME}
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
   paper-ebook-repository:
-    container_name: paper-ebook-repository
+    container_name: ${PAPER_EBOOK_REPO_CONTAINER_NAME}
     image: latest123/paper-ebook-repository
     volumes:
       - ./data:/data/ebook=repository
+      - ./data/certbot/conf:/etc/letsencrypt
     restart: always
     build:
       context: ../paper-ebook-repository
       dockerfile: ./docker/dev/Dockerfile
     ports:
       - "3012:3012"
+  paper-be:
+    container_name: ${PAPER_BE}
+    image: latest123/paper-be
+    restart: always
+    build:
+      context: ../paper-be
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - ${PAPER_BE_PORT}:${PAPER_BE_PORT}
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
   paper-mongodb-crud:
-    container_name: paper-mongodb-crud
+    container_name: ${PAPER_CRUD_CONTAINER_NAME}
     image: latest123/paper-mongodb-crud
     restart: always
     build:
       context: ../paper-mongodb-crud
       dockerfile: ./docker/dev/Dockerfile
     ports:
-      - ${PAPER_CRUD_PORT}:5005
+      - ${PAPER_CRUD_PORT}:${PAPER_CRUD_PORT}
     links:
       - mongo
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
     # environment:
-    #   - BLURPAPER_MONGO_SSL_PATH=undefinedd
-    #   - BLURPAPER_ORIGIN=blurpaper.com
+      # - BLURPAPER_MONGO_SSL_PATH=undefinedd
+      # - BLURPAPER_ORIGIN=blurpaper.com
+      # - NODE_ENV=production
   mongo:
     container_name: mongo
     image: mongo

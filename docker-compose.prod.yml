@@ -1,0 +1,14 @@
+version: "3"
+services:
+  paper-ebook-admin-be:
+    environment:
+      - NODE_ENV=production
+  paper-ebook-repository:
+    environment:
+      - NODE_ENV=production
+  paper-be:
+    environment:
+      - NODE_ENV=production
+  paper-mongodb-crud:
+    environment:
+      - NODE_ENV=production
