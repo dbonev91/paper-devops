@@ -28,7 +28,7 @@ services:
       context: ../paper-ebook-admin-be
       dockerfile: ./docker/dev/Dockerfile
     ports:
-      - "3011:3011"
+      - ${PAPER_EBOOK_ADMIN_BE_PORT}:${PAPER_EBOOK_ADMIN_BE_PORT}
     links:
       - ${PAPER_EBOOK_REPO_CONTAINER_NAME}
       - ${PAPER_CRUD_CONTAINER_NAME}
@@ -45,7 +45,7 @@ services:
       context: ../paper-ebook-repository
       dockerfile: ./docker/dev/Dockerfile
     ports:
-      - "3012:3012"
+      - ${PAPER_EBOOK_REPO_PORT}:${PAPER_EBOOK_REPO_PORT}
   paper-be:
     container_name: ${PAPER_BE}
     image: latest123/paper-be
