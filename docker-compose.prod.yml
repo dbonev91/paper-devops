@@ -9,6 +9,9 @@ services:
   paper-be:
     environment:
       - NODE_ENV=production
+  paper-email-be:
+    environment:
+      - NODE_ENV=production
   paper-mongodb-crud:
     environment:
       - NODE_ENV=production

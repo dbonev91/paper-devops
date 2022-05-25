@@ -11,7 +11,7 @@ services:
     image: latest123/paper-web-app
     restart: always
     build:
-      context: ../paper-web-app
+      context: ../paper
       dockerfile: ./docker/dev/Dockerfile
     ports:
       - "8090:80"
@@ -20,6 +20,19 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  paper-web-admin:
+    container_name: paper-admin
+    image: latest123/paper-admin
+    restart: always
+    build:
+      context: ../paper-admin
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - "8093:80"
+      - "8095:8095"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
   paper-ebook-admin-be:
     container_name: ${PAPER_EBOOK_ADMIN_BE_CONTAINER_NAME}
     image: latest123/paper-ebook-admin-be
@@ -57,6 +70,17 @@ services:
       - ${PAPER_BE_PORT}:${PAPER_BE_PORT}
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
+  paper-email-be:
+    container_name: ${PAPER_EMAIL_BE_CONTAINER_NAME}
+    image: latest123/paper-ebook-repository
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../paper-ebook-repository
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - ${PAPER_EMAIL_BE_PORT}:${PAPER_EMAIL_BE_PORT}
   paper-mongodb-crud:
     container_name: ${PAPER_CRUD_CONTAINER_NAME}
     image: latest123/paper-mongodb-crud
