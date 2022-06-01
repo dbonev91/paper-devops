@@ -48,6 +48,20 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  paper-raffle:
+    container_name: paper-raffle
+    image: latest123/paper-raffle
+    restart: always
+    build:
+      context: ../paper-raffle
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - "8101:80"
+      - "8103:8103"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   paper-ebook-admin-be:
     container_name: ${PAPER_EBOOK_ADMIN_BE_CONTAINER_NAME}
     image: latest123/paper-ebook-admin-be
@@ -96,6 +110,17 @@ services:
       dockerfile: ./docker/dev/Dockerfile
     ports:
       - ${PAPER_EMAIL_BE_PORT}:${PAPER_EMAIL_BE_PORT}
+  paper-raffle-be:
+    container_name: ${PAPER_RAFFLE_BE_CONTAINER_NAME}
+    image: latest123/paper-raffle-be
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../paper-raffle-be
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - ${PAPER_RAFFLE_BE_PORT}:${PAPER_RAFFLE_BE_PORT}
   paper-mongodb-crud:
     container_name: ${PAPER_CRUD_CONTAINER_NAME}
     image: latest123/paper-mongodb-crud
@@ -109,7 +134,7 @@ services:
       - mongo
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
-    # environment:
+      # environment:
       # - BLURPAPER_MONGO_SSL_PATH=undefinedd
       # - BLURPAPER_ORIGIN=blurpaper.com
       # - NODE_ENV=production
