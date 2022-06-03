@@ -18,3 +18,6 @@ services:
   paper-mongodb-crud:
     environment:
       - NODE_ENV=production
+  paper-mongodb-export:
+    environment:
+      - NODE_ENV=production

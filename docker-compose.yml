@@ -110,6 +110,17 @@ services:
       dockerfile: ./docker/dev/Dockerfile
     ports:
       - ${PAPER_EMAIL_BE_PORT}:${PAPER_EMAIL_BE_PORT}
+  paper-mongodb-export:
+    container_name: ${PAPER_MONGODB_EXPORT_CONTAINER_NAME}
+    image: latest123/paper-mongodb-export
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../paper-mongodb-export
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - ${PAPER_MONGODB_EXPORT_PORT}:${PAPER_MONGODB_EXPORT_PORT}
   paper-raffle-be:
     container_name: ${PAPER_RAFFLE_BE_CONTAINER_NAME}
     image: latest123/paper-raffle-be
