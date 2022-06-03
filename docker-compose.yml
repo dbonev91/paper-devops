@@ -136,10 +136,13 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
     restart: always
     build:
-      context: ../paper-raffle-be
-      dockerfile: ./docker/dev/Dockerfile
+      context: ../
+      dockerfile: ./paper-raffle-be/docker/dev/Dockerfile
     ports:
       - ${PAPER_RAFFLE_BE_PORT}:${PAPER_RAFFLE_BE_PORT}
+    environment:
+      - PORT=${PAPER_RAFFLE_BE_PORT}
+      - APP_NAME=${PAPER_RAFFLE_BE_APP_NAME}
   paper-mongodb-crud:
     container_name: ${PAPER_CRUD_CONTAINER_NAME}
     image: latest123/paper-mongodb-crud
