@@ -62,6 +62,20 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  paper-ebook-admin:
+    container_name: paper-ebook-admin
+    image: latest123/paper-ebook-admin
+    restart: always
+    build:
+      context: ../paper-ebook-admin
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - "8105:80"
+      - "8107:8099"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   paper-ebook-admin-be:
     container_name: ${PAPER_EBOOK_ADMIN_BE_CONTAINER_NAME}
     image: latest123/paper-ebook-admin-be
