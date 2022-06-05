@@ -16,6 +16,10 @@ services:
     build:
       args:
         - ENVIRONMENT_NAME=prod
+  paper-ebook-admin:
+    build:
+      args:
+        - ENVIRONMENT_NAME=prod
   paper-ebook-admin-be:
     environment:
       - NODE_ENV=production
