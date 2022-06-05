@@ -11,7 +11,11 @@ services:
   paper-email-templates:
     build:
       args:
-        - ENVIRONMENT_NAME=dev
+        - ENVIRONMENT_NAME=prod
+  paper-raffle:
+    build:
+      args:
+        - ENVIRONMENT_NAME=prod
   paper-ebook-admin-be:
     environment:
       - NODE_ENV=production

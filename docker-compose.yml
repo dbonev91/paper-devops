@@ -61,6 +61,8 @@ services:
     build:
       context: ../paper-raffle
       dockerfile: ./docker/dev/Dockerfile
+      args:
+        - ENVIRONMENT_NAME=dev
     ports:
       - "8101:80"
       - "8103:8103"
