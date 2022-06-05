@@ -148,18 +148,17 @@ services:
     image: latest123/paper-mongodb-crud
     restart: always
     build:
-      context: ../paper-mongodb-crud
-      dockerfile: ./docker/dev/Dockerfile
+      context: ../
+      dockerfile: ./paper-mongodb-crud/docker/dev/Dockerfile
     ports:
       - ${PAPER_CRUD_PORT}:${PAPER_CRUD_PORT}
     links:
       - mongo
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
-      # environment:
-      # - BLURPAPER_MONGO_SSL_PATH=undefinedd
-      # - BLURPAPER_ORIGIN=blurpaper.com
-      # - NODE_ENV=production
+    environment:
+      - PORT=${PAPER_CRUD_PORT}
+      - APP_NAME=${PAPER_CRUD_APP_NAME}
   mongo:
     container_name: mongo
     image: mongo

@@ -24,6 +24,8 @@ services:
   paper-mongodb-crud:
     environment:
       - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
   paper-mongodb-export:
     environment:
       - NODE_ENV=production
