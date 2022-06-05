@@ -8,6 +8,10 @@ services:
     build:
       args:
         - ENVIRONMENT_NAME=prod
+  paper-email-templates:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
   paper-ebook-admin-be:
     environment:
       - NODE_ENV=production

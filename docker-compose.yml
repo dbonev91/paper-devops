@@ -45,6 +45,8 @@ services:
     build:
       context: ../paper-email-templates
       dockerfile: ./docker/dev/Dockerfile
+      args:
+        - ENVIRONMENT_NAME=dev
     ports:
       - "8097:80"
       - "8099:8099"
