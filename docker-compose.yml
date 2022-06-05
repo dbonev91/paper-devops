@@ -29,6 +29,8 @@ services:
     build:
       context: ../paper-admin
       dockerfile: ./docker/dev/Dockerfile
+      args:
+        - ENVIRONMENT_NAME=dev
     ports:
       - "8093:80"
       - "8095:8095"
