@@ -67,8 +67,8 @@ services:
     image: latest123/paper-ebook-admin-be
     restart: always
     build:
-      context: ../paper-ebook-admin-be
-      dockerfile: ./docker/dev/Dockerfile
+      context: ../
+      dockerfile: ./paper-ebook-admin-be/docker/dev/Dockerfile
     ports:
       - ${PAPER_EBOOK_ADMIN_BE_PORT}:${PAPER_EBOOK_ADMIN_BE_PORT}
     links:
@@ -76,6 +76,13 @@ services:
       - ${PAPER_CRUD_CONTAINER_NAME}
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
+    environment:
+      - PORT=${PAPER_EBOOK_ADMIN_BE_PORT}
+      - APP_NAME=${PAPER_EBOOK_ADMIN_BE_APP_NAME}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - PAPER_EBOOK_REPO_PORT=${PAPER_EBOOK_REPO_PORT}
+      - PROTOCOL=http
+      - DOMAIN=localhost
   paper-ebook-repository:
     container_name: ${PAPER_EBOOK_REPO_CONTAINER_NAME}
     image: latest123/paper-ebook-repository

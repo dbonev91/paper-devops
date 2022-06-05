@@ -3,6 +3,10 @@ services:
   paper-ebook-admin-be:
     environment:
       - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - PROTOCOL=https
+      - DOMAIN=blurpaper.com
   paper-ebook-repository:
     environment:
       - NODE_ENV=production
