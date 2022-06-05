@@ -91,10 +91,15 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
     restart: always
     build:
-      context: ../paper-ebook-repository
-      dockerfile: ./docker/dev/Dockerfile
+      context: ../
+      dockerfile: ./paper-ebook-repository/docker/dev/Dockerfile
     ports:
       - ${PAPER_EBOOK_REPO_PORT}:${PAPER_EBOOK_REPO_PORT}
+    environment:
+      - PORT=${PAPER_EBOOK_REPO_PORT}
+      - APP_NAME=${PAPER_EBOOK_REPO_APP_NAME}
+      - PROTOCOL=http
+      - DOMAIN=localhost
   paper-be:
     container_name: ${PAPER_BE}
     image: latest123/paper-be
