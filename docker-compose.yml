@@ -93,12 +93,20 @@ services:
     image: latest123/paper-be
     restart: always
     build:
-      context: ../paper-be
-      dockerfile: ./docker/dev/Dockerfile
+      context: ../
+      dockerfile: ./paper-be/docker/dev/Dockerfile
     ports:
       - ${PAPER_BE_PORT}:${PAPER_BE_PORT}
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
+    environment:
+      - PORT=${PAPER_BE_PORT}
+      - APP_NAME=${PAPER_BE_APP_NAME}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - PAPER_EMAIL_BE_PORT=${PAPER_EMAIL_BE_PORT}
+      - PROTOCOL=http
+      - DOMAIN=localhost
+      - PAPER_BE_JWT_PRIVATE_KEY=${PAPER_BE_JWT_PRIVATE_KEY}
   paper-email-be:
     container_name: ${PAPER_EMAIL_BE_CONTAINER_NAME}
     image: latest123/paper-email-be
