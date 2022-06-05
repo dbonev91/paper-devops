@@ -1,5 +1,21 @@
 version: "3"
 services:
+  paper-web-app:
+    environment:
+      - NODE_ENV=production
+    build:
+      args:
+        - SSL=ssl
+
+        - SSL_CERTIFIVATE=/etc/letsencrypt/live/blurpaper.com/fullchain.pem
+        - SSL_CERTIFIVATE_KEY=/etc/letsencrypt/live/blurpaper.com/privkey.pem
+        - SSL_DHPARAM=/etc/letsencrypt/ssl-dhparams.pem
+
+        - SSL_CERTIFIVATE_PROP=ssl_certificate
+        - SSL_CERTIFIVATE_KEY_PROP=ssl_certificate_key
+        - SSL_DHPARAM_PROP=ssl_dhparam
+
+        - END=
   paper-ebook-admin-be:
     environment:
       - NODE_ENV=production

@@ -13,6 +13,18 @@ services:
     build:
       context: ../paper
       dockerfile: ./docker/dev/Dockerfile
+      args:
+        - SSL=
+
+        - SSL_CERTIFIVATE=
+        - SSL_CERTIFIVATE_KEY=
+        - SSL_DHPARAM=
+
+        - SSL_CERTIFIVATE_PROP=
+        - SSL_CERTIFIVATE_KEY_PROP=
+        - SSL_DHPARAM_PROP=
+
+        - END=
     ports:
       - "8090:80"
       - "8092:8092"
