@@ -183,6 +183,25 @@ services:
     environment:
       - PORT=${PAPER_RAFFLE_BE_PORT}
       - APP_NAME=${PAPER_RAFFLE_BE_APP_NAME}
+  paper-loop:
+    container_name: ${PAPER_LOOP_CONTAINER_NAME}
+    image: latest123/paper-loop
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-loop/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_LOOP_PORT}:${PAPER_LOOP_PORT}
+    environment:
+      - PORT=${PAPER_LOOP_PORT}
+      - APP_NAME=${PAPER_LOOP_APP_NAME}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - PAPER_EMAIL_BE_PORT=${PAPER_EMAIL_BE_PORT}
+      - PAPER_LOOP_AUTO_SEND_EMAIL_INTERVAL=${PAPER_LOOP_AUTO_SEND_EMAIL_INTERVAL}
+      - PROTOCOL=http
+      - DOMAIN=localhost
   paper-mongodb-crud:
     container_name: ${PAPER_CRUD_CONTAINER_NAME}
     image: latest123/paper-mongodb-crud
