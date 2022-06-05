@@ -1,0 +1,61 @@
+version: "3"
+services:
+  paper-ebook-admin-be:
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - PROTOCOL=https
+      - DOMAIN=blurpaper.com
+  paper-ebook-repository:
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - PROTOCOL=https
+      - DOMAIN=blurpaper.com
+  paper-be:
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - PROTOCOL=https
+      - DOMAIN=blurpaper.com
+  paper-email-be:
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - PROTOCOL=https
+      - DOMAIN=blurpaper.com
+  paper-raffle-be:
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+  paper-mongodb-crud:
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+  paper-mongodb-export:
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - PROTOCOL=https
+      - DOMAIN=blurpaper.com
+  paper-loop:
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - PROTOCOL=https
+      - DOMAIN=blurpaper.com
+  paper-pixel:
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - PROTOCOL=https
+      - DOMAIN=blurpaper.com

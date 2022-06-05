@@ -11,7 +11,7 @@ services:
     image: latest123/paper-web-app
     restart: always
     build:
-      context: ../paper-web-app
+      context: ../paper
       dockerfile: ./docker/dev/Dockerfile
     ports:
       - "8090:80"
@@ -20,49 +20,223 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  paper-web-admin:
+    container_name: paper-admin
+    image: latest123/paper-admin
+    restart: always
+    build:
+      context: ../paper-admin
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - "8093:80"
+      - "8095:8095"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  paper-email-templates:
+    container_name: paper-email-templates
+    image: latest123/paper-email-templates
+    restart: always
+    build:
+      context: ../paper-email-templates
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - "8097:80"
+      - "8099:8099"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  paper-raffle:
+    container_name: paper-raffle
+    image: latest123/paper-raffle
+    restart: always
+    build:
+      context: ../paper-raffle
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - "8101:80"
+      - "8103:8103"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  paper-ebook-admin:
+    container_name: paper-ebook-admin
+    image: latest123/paper-ebook-admin
+    restart: always
+    build:
+      context: ../paper-ebook-admin
+      dockerfile: ./docker/dev/Dockerfile
+    ports:
+      - "8105:80"
+      - "8107:8099"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   paper-ebook-admin-be:
-    container_name: paper-ebook-admin-be
+    container_name: ${PAPER_EBOOK_ADMIN_BE_CONTAINER_NAME}
     image: latest123/paper-ebook-admin-be
     restart: always
     build:
-      context: ../paper-ebook-admin-be
-      dockerfile: ./docker/dev/Dockerfile
+      context: ../
+      dockerfile: ./paper-ebook-admin-be/docker/dev/Dockerfile
     ports:
-      - "3011:3011"
+      - ${PAPER_EBOOK_ADMIN_BE_PORT}:${PAPER_EBOOK_ADMIN_BE_PORT}
     links:
-      - paper-ebook-repository
-      - paper-mongodb-crud
+      - ${PAPER_EBOOK_REPO_CONTAINER_NAME}
+      - ${PAPER_CRUD_CONTAINER_NAME}
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    environment:
+      - PORT=${PAPER_EBOOK_ADMIN_BE_PORT}
+      - APP_NAME=${PAPER_EBOOK_ADMIN_BE_APP_NAME}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - PAPER_EBOOK_REPO_PORT=${PAPER_EBOOK_REPO_PORT}
+      - PROTOCOL=http
+      - DOMAIN=localhost
   paper-ebook-repository:
-    container_name: paper-ebook-repository
+    container_name: ${PAPER_EBOOK_REPO_CONTAINER_NAME}
     image: latest123/paper-ebook-repository
     volumes:
-      - ./data:/data/ebook=repository
+      - ./data/paper/repository/ebooks:/usr/src/app/books
+      - ./data/certbot/conf:/etc/letsencrypt
     restart: always
     build:
-      context: ../paper-ebook-repository
-      dockerfile: ./docker/dev/Dockerfile
+      context: ../
+      dockerfile: ./paper-ebook-repository/docker/dev/Dockerfile
     ports:
-      - "3012:3012"
+      - ${PAPER_EBOOK_REPO_PORT}:${PAPER_EBOOK_REPO_PORT}
+    environment:
+      - PORT=${PAPER_EBOOK_REPO_PORT}
+      - APP_NAME=${PAPER_EBOOK_REPO_APP_NAME}
+      - PROTOCOL=http
+      - DOMAIN=localhost
+  paper-be:
+    container_name: ${PAPER_BE}
+    image: latest123/paper-be
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-be/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_BE_PORT}:${PAPER_BE_PORT}
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    environment:
+      - PORT=${PAPER_BE_PORT}
+      - APP_NAME=${PAPER_BE_APP_NAME}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - PAPER_EMAIL_BE_PORT=${PAPER_EMAIL_BE_PORT}
+      - PROTOCOL=http
+      - DOMAIN=localhost
+      - PAPER_BE_JWT_PRIVATE_KEY=${PAPER_BE_JWT_PRIVATE_KEY}
+  paper-email-be:
+    container_name: ${PAPER_EMAIL_BE_CONTAINER_NAME}
+    image: latest123/paper-email-be
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-email-be/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_EMAIL_BE_PORT}:${PAPER_EMAIL_BE_PORT}
+    environment:
+      - PORT=${PAPER_EMAIL_BE_PORT}
+      - APP_NAME=${PAPER_EMAIL_BE_APP_NAME}
+      - GMAIL_APP_PASSWORD=${PAPER_EMAIL_GMAIL_APP_PASSWORD}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - PAPER_LOOP_PORT=${PAPER_LOOP_PORT}
+      - PROTOCOL=http
+      - DOMAIN=localhost
+  paper-mongodb-export:
+    container_name: ${PAPER_MONGODB_EXPORT_CONTAINER_NAME}
+    image: latest123/paper-mongodb-export
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-mongodb-export/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_MONGODB_EXPORT_PORT}:${PAPER_MONGODB_EXPORT_PORT}
+    environment:
+      - PORT=${PAPER_MONGODB_EXPORT_PORT}
+      - APP_NAME=${PAPER_MONGODB_EXPORT_APP_NAME}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - PROTOCOL=http
+      - DOMAIN=localhost
+  paper-raffle-be:
+    container_name: ${PAPER_RAFFLE_BE_CONTAINER_NAME}
+    image: latest123/paper-raffle-be
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-raffle-be/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_RAFFLE_BE_PORT}:${PAPER_RAFFLE_BE_PORT}
+    environment:
+      - PORT=${PAPER_RAFFLE_BE_PORT}
+      - APP_NAME=${PAPER_RAFFLE_BE_APP_NAME}
+  paper-loop:
+    container_name: ${PAPER_LOOP_CONTAINER_NAME}
+    image: latest123/paper-loop
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-loop/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_LOOP_PORT}:${PAPER_LOOP_PORT}
+    environment:
+      - PORT=${PAPER_LOOP_PORT}
+      - APP_NAME=${PAPER_LOOP_APP_NAME}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - PAPER_EMAIL_BE_PORT=${PAPER_EMAIL_BE_PORT}
+      - PAPER_LOOP_AUTO_SEND_EMAIL_INTERVAL=${PAPER_LOOP_AUTO_SEND_EMAIL_INTERVAL}
+      - PROTOCOL=http
+      - DOMAIN=localhost
+  paper-pixel:
+    container_name: ${PAPER_PIXEL_CONTAINER_NAME}
+    image: latest123/paper-pixel
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-pixel/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_PIXEL_PORT}:${PAPER_PIXEL_PORT}
+    environment:
+      - PORT=${PAPER_PIXEL_PORT}
+      - APP_NAME=${PAPER_PIXEL_APP_NAME}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - PROTOCOL=http
+      - DOMAIN=localhost
   paper-mongodb-crud:
-    container_name: paper-mongodb-crud
+    container_name: ${PAPER_CRUD_CONTAINER_NAME}
     image: latest123/paper-mongodb-crud
     restart: always
     build:
-      context: ../paper-mongodb-crud
-      dockerfile: ./docker/dev/Dockerfile
+      context: ../
+      dockerfile: ./paper-mongodb-crud/docker/dev/Dockerfile
     ports:
-      - "3015:3015"
+      - ${PAPER_CRUD_PORT}:${PAPER_CRUD_PORT}
     links:
       - mongo
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
     environment:
-      - BLURPAPER_MONGO_SSL_PATH=undefinedd
-      - BLURPAPER_ORIGIN=blurpaper.com
+      - PORT=${PAPER_CRUD_PORT}
+      - APP_NAME=${PAPER_CRUD_APP_NAME}
   mongo:
     container_name: mongo
     image: mongo
     volumes:
-      - ./data:/data/db
-    ports:
-      - '27019:27017'
+      - ./data/mongo:/data/db
