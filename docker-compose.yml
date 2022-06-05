@@ -15,19 +15,18 @@ services:
       dockerfile: ./docker/dev/Dockerfile
       args:
         - SSL=
-
         - SSL_CERTIFIVATE=
         - SSL_CERTIFIVATE_KEY=
         - SSL_DHPARAM=
-
         - SSL_CERTIFIVATE_PROP=
         - SSL_CERTIFIVATE_KEY_PROP=
         - SSL_DHPARAM_PROP=
-
         - END=
+        - RUN_PARAM_ENV=-- --configuration=production
     ports:
       - "8090:80"
       - "8092:8092"
+      - "9093:9093"
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
