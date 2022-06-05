@@ -52,3 +52,10 @@ services:
       - FULL_CHAIN=${SSH_FULL_CHAIN}
       - PROTOCOL=https
       - DOMAIN=blurpaper.com
+  paper-pixel:
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - PROTOCOL=https
+      - DOMAIN=blurpaper.com
