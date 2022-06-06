@@ -25,8 +25,9 @@ services:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - LINK_TO_PAPER_CRUD=${PROD_DOMAIN_NAME}
+      - LINK_TO_PAPER_EBOOK_REPO=${PROD_DOMAIN_NAME}
       - PROTOCOL=https
-      - DOMAIN=blurpaper.com
   paper-ebook-repository:
     environment:
       - NODE_ENV=production

@@ -103,10 +103,11 @@ services:
     environment:
       - PORT=${PAPER_EBOOK_ADMIN_BE_PORT}
       - APP_NAME=${PAPER_EBOOK_ADMIN_BE_APP_NAME}
+      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
+      - LINK_TO_PAPER_EBOOK_REPO=${PAPER_EBOOK_REPO_CONTAINER_NAME}
       - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
       - PAPER_EBOOK_REPO_PORT=${PAPER_EBOOK_REPO_PORT}
       - PROTOCOL=http
-      - DOMAIN=localhost
   paper-ebook-repository:
     container_name: ${PAPER_EBOOK_REPO_CONTAINER_NAME}
     image: latest123/paper-ebook-repository
