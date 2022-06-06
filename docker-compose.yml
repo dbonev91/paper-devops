@@ -178,8 +178,8 @@ services:
       - PORT=${PAPER_MONGODB_EXPORT_PORT}
       - APP_NAME=${PAPER_MONGODB_EXPORT_APP_NAME}
       - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
       - PROTOCOL=http
-      - DOMAIN=localhost
   paper-raffle-be:
     container_name: ${PAPER_RAFFLE_BE_CONTAINER_NAME}
     image: latest123/paper-raffle-be
