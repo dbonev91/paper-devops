@@ -1,33 +1,54 @@
 version: "3"
 services:
+  paper-web-app:
+    build:
+      args:
+        - ENVIRONMENT_NAME=prod
+  paper-web-admin:
+    build:
+      args:
+        - ENVIRONMENT_NAME=prod
+  paper-email-templates:
+    build:
+      args:
+        - ENVIRONMENT_NAME=prod
+  paper-raffle:
+    build:
+      args:
+        - ENVIRONMENT_NAME=prod
+  paper-ebook-admin:
+    build:
+      args:
+        - ENVIRONMENT_NAME=prod
   paper-ebook-admin-be:
     environment:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - LINK_TO_PAPER_CRUD=${PROD_DOMAIN_NAME}
+      - LINK_TO_PAPER_EBOOK_REPO=${PROD_DOMAIN_NAME}
       - PROTOCOL=https
-      - DOMAIN=blurpaper.com
   paper-ebook-repository:
     environment:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
-      - PROTOCOL=https
-      - DOMAIN=blurpaper.com
   paper-be:
     environment:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - LINK_TO_PAPER_CRUD=${PROD_DOMAIN_NAME}
+      - LINK_TO_PAPER_EMAIL_BE=${PROD_DOMAIN_NAME}
       - PROTOCOL=https
-      - DOMAIN=blurpaper.com
   paper-email-be:
     environment:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - LINK_TO_PAPER_CRUD=${PROD_DOMAIN_NAME}
+      - LINK_TO_PAPER_LOOP=${PROD_DOMAIN_NAME}
       - PROTOCOL=https
-      - DOMAIN=blurpaper.com
   paper-raffle-be:
     environment:
       - NODE_ENV=production
@@ -43,19 +64,20 @@ services:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - LINK_TO_PAPER_CRUD=${PROD_DOMAIN_NAME}
       - PROTOCOL=https
-      - DOMAIN=blurpaper.com
   paper-loop:
     environment:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - LINK_TO_PAPER_CRUD=${PROD_DOMAIN_NAME}
+      - LINK_TO_PAPER_EMAIL_BE=${PROD_DOMAIN_NAME}
       - PROTOCOL=https
-      - DOMAIN=blurpaper.com
   paper-pixel:
     environment:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - LINK_TO_PAPER_CRUD=${PROD_DOMAIN_NAME}
       - PROTOCOL=https
-      - DOMAIN=blurpaper.com
