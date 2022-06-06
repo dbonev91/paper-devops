@@ -229,8 +229,8 @@ services:
       - PORT=${PAPER_PIXEL_PORT}
       - APP_NAME=${PAPER_PIXEL_APP_NAME}
       - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
       - PROTOCOL=http
-      - DOMAIN=localhost
   paper-mongodb-crud:
     container_name: ${PAPER_CRUD_CONTAINER_NAME}
     image: latest123/paper-mongodb-crud
