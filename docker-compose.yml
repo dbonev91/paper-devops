@@ -123,8 +123,6 @@ services:
     environment:
       - PORT=${PAPER_EBOOK_REPO_PORT}
       - APP_NAME=${PAPER_EBOOK_REPO_APP_NAME}
-      - PROTOCOL=http
-      - DOMAIN=localhost
   paper-be:
     container_name: ${PAPER_BE}
     image: latest123/paper-be
