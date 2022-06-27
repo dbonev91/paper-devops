@@ -76,16 +76,16 @@ services:
     restart: always
     build:
       context: ../paper-ebook-admin
-      dockerfile: ./docker/dev/Dockerfile
+      dockerfile: ./docker/dev/Dockerfile-dev
       args:
         - ENVIRONMENT_NAME=dev
     ports:
-      - "8105:80"
+      - "8105:4200"
       - "8107:8099"
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+      - '../paper-ebook-admin/src:/usr/local/app/src'
   paper-ebook-admin-be:
     container_name: ${PAPER_EBOOK_ADMIN_BE_CONTAINER_NAME}
     image: latest123/paper-ebook-admin-be

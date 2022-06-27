@@ -20,6 +20,8 @@ services:
     build:
       args:
         - ENVIRONMENT_NAME=prod
+      dockerfile: ./docker/dev/Dockerfile
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   paper-ebook-admin-be:
     environment:
       - NODE_ENV=production
