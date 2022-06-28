@@ -1,0 +1,9 @@
+version: "3"
+services:
+  paper-ebook-admin-be:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-ebook-admin-be:/usr/src/app/paper-ebook-admin-be
+      - /usr/src/app/paper-ebook-admin-be/node_modules
