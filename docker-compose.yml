@@ -100,8 +100,6 @@ services:
       - ${PAPER_CRUD_CONTAINER_NAME}
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
-      - ../paper-ebook-admin-be:/usr/src/app/paper-ebook-admin-be
-      - /usr/src/app/paper-ebook-admin-be/node_modules
     environment:
       - PORT=${PAPER_EBOOK_ADMIN_BE_PORT}
       - APP_NAME=${PAPER_EBOOK_ADMIN_BE_APP_NAME}
