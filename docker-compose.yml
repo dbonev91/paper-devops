@@ -112,7 +112,7 @@ services:
     container_name: ${PAPER_EBOOK_REPO_CONTAINER_NAME}
     image: latest123/paper-ebook-repository
     volumes:
-      - ./data/paper/repository/ebooks:/usr/src/app/books
+      - ./data/paper/repository/ebooks:/usr/src/app/paper-ebook-repository/books
       - ./data/certbot/conf:/etc/letsencrypt
     restart: always
     build:
