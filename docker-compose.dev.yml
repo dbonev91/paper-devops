@@ -1,5 +1,10 @@
 version: "3"
 services:
+  paper-web-app:
+    build:
+      dockerfile: ./docker/dev/Dockerfile-dev
+    volumes:
+      - '../paper/src:/usr/local/app/src'
   paper-ebook-admin-be:
     build:
       args:
@@ -7,3 +12,10 @@ services:
     volumes:
       - ../paper-ebook-admin-be:/usr/src/app/paper-ebook-admin-be
       - /usr/src/app/paper-ebook-admin-be/node_modules
+  paper-ebook-repository:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-ebook-repository:/usr/src/app/paper-ebook-repository
+      - /usr/src/app/paper-ebook-repository/node_modules
