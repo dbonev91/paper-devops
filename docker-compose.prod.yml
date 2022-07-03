@@ -36,6 +36,9 @@ services:
       - LINK_TO_PAPER_EBOOK_REPO=${PROD_DOMAIN_NAME}
       - PROTOCOL=https
   paper-ebook-repository:
+    build:
+      args:
+        - ENVIRONMENT_NAME=prod
     environment:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
