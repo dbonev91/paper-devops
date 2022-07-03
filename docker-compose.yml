@@ -12,16 +12,14 @@ services:
     restart: always
     build:
       context: ../paper
-      dockerfile: ./docker/dev/Dockerfile
       args:
         - ENVIRONMENT_NAME=dev
     ports:
-      - "8090:80"
+      - "8090:4200"
       - "8092:8092"
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   paper-web-admin:
     container_name: paper-admin
     image: latest123/paper-admin
