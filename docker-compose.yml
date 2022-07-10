@@ -229,6 +229,22 @@ services:
       - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
       - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
       - PROTOCOL=http
+  paper-stripe-payment:
+    container_name: ${PAPER_STRIPE_PAYMENT_BE_CONTAINER_NAME}
+    image: latest123/paper-stripe-payment
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-stripe-payment/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_STRIPE_PAYMENT_BE_PORT}:${PAPER_STRIPE_PAYMENT_BE_PORT}
+    environment:
+      - PORT=${PAPER_STRIPE_PAYMENT_BE_PORT}
+      - APP_NAME=${PAPER_STRIPE_PAYMENT_BE_APP_NAME}
+      - GMAIL_APP_PASSWORD=${PAPER_EMAIL_GMAIL_APP_PASSWORD}
+      - PROTOCOL=http
   paper-mongodb-crud:
     container_name: ${PAPER_CRUD_CONTAINER_NAME}
     image: latest123/paper-mongodb-crud
