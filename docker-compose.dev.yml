@@ -5,6 +5,8 @@ services:
       dockerfile: ./docker/dev/Dockerfile-dev
     volumes:
       - '../paper/src:/usr/local/app/src'
+    ports:
+      - "8090:4200"
   paper-ebook-admin-be:
     build:
       args:

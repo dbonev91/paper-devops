@@ -5,6 +5,8 @@ services:
       dockerfile: ./docker/dev/Dockerfile
       args:
         - ENVIRONMENT_NAME=prod
+    ports:
+      - "8090:80"
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   paper-web-admin:
     build:
