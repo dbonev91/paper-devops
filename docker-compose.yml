@@ -15,7 +15,6 @@ services:
       args:
         - ENVIRONMENT_NAME=dev
     ports:
-      - "8090:4200"
       - "8092:8092"
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
