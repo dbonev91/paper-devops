@@ -245,6 +245,7 @@ services:
       - APP_NAME=${PAPER_STRIPE_PAYMENT_BE_APP_NAME}
       - GMAIL_APP_PASSWORD=${PAPER_EMAIL_GMAIL_APP_PASSWORD}
       - PROTOCOL=http
+      - STRIPE_PAYMENT_API_KEY=${PAPER_STRIPE_PAYMENT_BE_PAYMENT_API_KEY}
   paper-mongodb-crud:
     container_name: ${PAPER_CRUD_CONTAINER_NAME}
     image: latest123/paper-mongodb-crud
