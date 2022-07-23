@@ -100,5 +100,6 @@ services:
     environment:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - LINK_TO_PAPER_CRUD=${PROD_DOMAIN_NAME}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
       - PROTOCOL=https
