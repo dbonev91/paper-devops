@@ -28,3 +28,10 @@ services:
     volumes:
       - ../paper-stripe-payment:/usr/src/app/paper-stripe-payment
       - /usr/src/app/paper-stripe-payment/node_modules
+  paper-be:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-be:/usr/src/app/paper-be
+      - /usr/src/app/paper-be/node_modules
