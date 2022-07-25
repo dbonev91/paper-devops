@@ -28,6 +28,8 @@ services:
     volumes:
       - ../paper-stripe-payment:/usr/src/app/paper-stripe-payment
       - /usr/src/app/paper-stripe-payment/node_modules
+    environment:
+      - STRIPE_PAYMENT_API_KEY=${PAPER_STRIPE_PAYMENT_BE_PAYMENT_API_KEY_DEV}
   paper-be:
     build:
       args:
