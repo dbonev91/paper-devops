@@ -257,11 +257,8 @@ services:
     ports:
       - ${PAPER_EPAY_PAYMENT_BE_PORT}:${PAPER_EPAY_PAYMENT_BE_PORT}
     environment:
-      - PORT=${PAPER_EPAY_PAYMENT_BE_PORT}
-      - APP_NAME=${PAPER_EPAY_PAYMENT_BE_APP_NAME}
-      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
-      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
-      - PROTOCOL=http
+      - EPAY_MIN=${PAPER_EPAY_PAYMENT_BE_MIN}
+      - EPAY_SECRET=${PAPER_EPAY_PAYMENT_BE_SECRET}
   paper-mongodb-crud:
     container_name: ${PAPER_CRUD_CONTAINER_NAME}
     image: latest123/paper-mongodb-crud
