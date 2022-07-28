@@ -29,7 +29,10 @@ services:
       - ../paper-stripe-payment:/usr/src/app/paper-stripe-payment
       - /usr/src/app/paper-stripe-payment/node_modules
     environment:
+      - PROTOCOL=http
       - STRIPE_PAYMENT_API_KEY=${PAPER_STRIPE_PAYMENT_BE_PAYMENT_API_KEY_DEV}
+      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
+      - LINK_TO_GENERIC_PAYMENT=${PAPER_GENERIC_PAYMENT_BE_CONTAINER_NAME}
   paper-epay-payment:
     build:
       args:
@@ -37,6 +40,24 @@ services:
     volumes:
       - ../paper-epay-payment:/usr/src/app/paper-epay-payment
       - /usr/src/app/paper-epay-payment/node_modules
+    environment:
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
+      - LINK_TO_GENERIC_PAYMENT=${PAPER_GENERIC_PAYMENT_BE_CONTAINER_NAME}
+      - PROTOCOL=http
+      - EPAY_PAYMENT_URL=${PAPER_EPAY_PAYMENT_BE_DEV_URL}
+      - EPAY_MIN=${PAPER_EPAY_PAYMENT_BE_DEV_MIN}
+      - EPAY_SECRET=${PAPER_EPAY_PAYMENT_BE_DEV_SECRET}
+  paper-generic-payment:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-generic-payment:/usr/src/app/paper-generic-payment
+      - /usr/src/app/paper-generic-payment/node_modules
+    environment:
+      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
+      - PROTOCOL=http
   paper-be:
     build:
       args:
