@@ -38,8 +38,6 @@ services:
       - ../paper-epay-payment:/usr/src/app/paper-epay-payment
       - /usr/src/app/paper-epay-payment/node_modules
     environment:
-      - PORT=${PAPER_EPAY_PAYMENT_BE_PORT}
-      - APP_NAME=${PAPER_EPAY_PAYMENT_BE_APP_NAME}
       - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
       - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
       - PROTOCOL=http
