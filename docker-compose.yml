@@ -243,8 +243,7 @@ services:
       - PORT=${PAPER_STRIPE_PAYMENT_BE_PORT}
       - APP_NAME=${PAPER_STRIPE_PAYMENT_BE_APP_NAME}
       - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
-      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
-      - PROTOCOL=http
+      - PAPER_GENERIC_PAYMENT_PORT=${PAPER_GENERIC_PAYMENT_BE_PORT}
   paper-epay-payment:
     container_name: ${PAPER_EPAY_PAYMENT_BE_CONTAINER_NAME}
     image: latest123/paper-epay-payment
@@ -259,6 +258,23 @@ services:
     environment:
       - PORT=${PAPER_EPAY_PAYMENT_BE_PORT}
       - APP_NAME=${PAPER_EPAY_PAYMENT_BE_APP_NAME}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - PAPER_GENERIC_PAYMENT_PORT=${PAPER_GENERIC_PAYMENT_BE_PORT}
+  paper-generic-payment:
+    container_name: ${PAPER_GENERIC_PAYMENT_BE_CONTAINER_NAME}
+    image: latest123/paper-generic-payment
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-generic-payment/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_GENERIC_PAYMENT_BE_PORT}:${PAPER_GENERIC_PAYMENT_BE_PORT}
+    environment:
+      - PORT=${PAPER_GENERIC_PAYMENT_BE_PORT}
+      - APP_NAME=${PAPER_GENERIC_PAYMENT_BE_APP_NAME}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
   paper-mongodb-crud:
     container_name: ${PAPER_CRUD_CONTAINER_NAME}
     image: latest123/paper-mongodb-crud
