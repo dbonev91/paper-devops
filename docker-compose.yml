@@ -260,6 +260,21 @@ services:
       - APP_NAME=${PAPER_EPAY_PAYMENT_BE_APP_NAME}
       - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
       - PAPER_GENERIC_PAYMENT_PORT=${PAPER_GENERIC_PAYMENT_BE_PORT}
+  paper-epay-notification:
+    container_name: ${PAPER_EPAY_NOTIFICATION_BE_CONTAINER_NAME}
+    image: latest123/paper-epay-notification
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-epay-notification/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_EPAY_NOTIFICATION_BE_PORT}:${PAPER_EPAY_NOTIFICATION_BE_PORT}
+    environment:
+      - PORT=${PAPER_EPAY_NOTIFICATION_BE_PORT}
+      - APP_NAME=${PAPER_EPAY_NOTIFICATION_BE_APP_NAME}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
   paper-generic-payment:
     container_name: ${PAPER_GENERIC_PAYMENT_BE_CONTAINER_NAME}
     image: latest123/paper-generic-payment
