@@ -122,6 +122,19 @@ services:
       - EPAY_PAYMENT_URL=${PAPER_EPAY_PAYMENT_BE_PROD_URL}
       - EPAY_MIN=${PAPER_EPAY_PAYMENT_BE_PROD_MIN}
       - EPAY_SECRET=${PAPER_EPAY_PAYMENT_BE_PROD_SECRET}
+  paper-epay-notification:
+    build:
+      args:
+        - ENVIRONMENT_NAME=prod
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - LINK_TO_PAPER_CRUD=${PROD_DOMAIN_NAME}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - PROTOCOL=https
+      - EPAY_PAYMENT_URL=${PAPER_EPAY_PAYMENT_BE_PROD_URL}
+      - EPAY_MIN=${PAPER_EPAY_PAYMENT_BE_PROD_MIN}
+      - EPAY_SECRET=${PAPER_EPAY_PAYMENT_BE_PROD_SECRET}
   paper-generic-payment:
     build:
       args:

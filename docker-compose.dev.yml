@@ -48,6 +48,20 @@ services:
       - EPAY_PAYMENT_URL=${PAPER_EPAY_PAYMENT_BE_DEV_URL}
       - EPAY_MIN=${PAPER_EPAY_PAYMENT_BE_DEV_MIN}
       - EPAY_SECRET=${PAPER_EPAY_PAYMENT_BE_DEV_SECRET}
+  paper-epay-notification:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-epay-notification:/usr/src/app/paper-epay-notification
+      - /usr/src/app/paper-epay-notification/node_modules
+    environment:
+      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
+      - LINK_TO_GENERIC_PAYMENT=${PAPER_GENERIC_PAYMENT_BE_CONTAINER_NAME}
+      - PROTOCOL=http
+      - EPAY_PAYMENT_URL=${PAPER_EPAY_PAYMENT_BE_DEV_URL}
+      - EPAY_MIN=${PAPER_EPAY_PAYMENT_BE_DEV_MIN}
+      - EPAY_SECRET=${PAPER_EPAY_PAYMENT_BE_DEV_SECRET}
   paper-generic-payment:
     build:
       args:
