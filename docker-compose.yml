@@ -275,6 +275,7 @@ services:
       - PORT=${PAPER_EPAY_NOTIFICATION_BE_PORT}
       - APP_NAME=${PAPER_EPAY_NOTIFICATION_BE_APP_NAME}
       - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+      - PAPER_BE_PORT=${PAPER_BE_PORT}
   paper-generic-payment:
     container_name: ${PAPER_GENERIC_PAYMENT_BE_CONTAINER_NAME}
     image: latest123/paper-generic-payment
