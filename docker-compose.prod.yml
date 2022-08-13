@@ -14,8 +14,12 @@ services:
         - ENVIRONMENT_NAME=prod
   paper-email-templates:
     build:
+      dockerfile: ./docker/dev/Dockerfile
       args:
         - ENVIRONMENT_NAME=prod
+    ports:
+      - "8099:8099"
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   paper-raffle:
     build:
       args:

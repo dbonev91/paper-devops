@@ -7,6 +7,13 @@ services:
       - '../paper/src:/usr/local/app/src'
     ports:
       - "8090:4200"
+  paper-email-templates:
+    build:
+      dockerfile: ./docker/dev/Dockerfile-dev
+    volumes:
+      - '../paper-email-templates/src:/usr/local/app/src'
+    ports:
+      - "8097:4200"
   paper-ebook-admin-be:
     build:
       args:
