@@ -28,6 +28,13 @@ services:
     volumes:
       - ../paper-ebook-repository:/usr/src/app/paper-ebook-repository
       - /usr/src/app/paper-ebook-repository/node_modules
+  paper-audiobook-repository:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-audiobook-repository:/usr/src/app/paper-audiobook-repository
+      - /usr/src/app/paper-audiobook-repository/node_modules
   paper-stripe-payment:
     build:
       args:
