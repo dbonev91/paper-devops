@@ -115,8 +115,6 @@ services:
     environment:
       - PORT=${PAPER_EBOOK_REPO_PORT}
       - APP_NAME=${PAPER_EBOOK_REPO_APP_NAME}
-<<<<<<< Updated upstream
-=======
   paper-audiobook-admin:
     container_name: paper-audiobook-admin
     image: latest123/paper-audiobook-admin
@@ -156,7 +154,6 @@ services:
     environment:
       - PORT=${PAPER_AUDIOBOOK_ADMIN_BE_PORT}
       - APP_NAME=${PAPER_AUDIOBOOK_ADMIN_BE_APP_NAME}
->>>>>>> Stashed changes
   paper-be:
     container_name: ${PAPER_BE}
     image: latest123/paper-be
