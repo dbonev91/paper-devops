@@ -51,6 +51,9 @@ services:
     volumes:
       - ../paper-audiobook-admin-be:/usr/src/app/paper-audiobook-admin-be
       - /usr/src/app/paper-audiobook-admin-be/node_modules
+    environment:
+      - LINK_TO_PAPER_AUDIOBOOK_REPO=${PAPER_AUDIOBOOK_REPO_CONTAINER_NAME}
+      - PROTOCOL=http
   paper-stripe-payment:
     build:
       args:

@@ -144,6 +144,7 @@ services:
     container_name: ${PAPER_AUDIOBOOK_ADMIN_BE_CONTAINER_NAME}
     image: latest123/paper-audiobook-admin-be
     volumes:
+      - ./data/paper/repository/audio:/usr/src/app/paper-audiobook-admin-be/digitals
       - ./data/certbot/conf:/etc/letsencrypt
     restart: always
     build:
@@ -154,6 +155,7 @@ services:
     environment:
       - PORT=${PAPER_AUDIOBOOK_ADMIN_BE_PORT}
       - APP_NAME=${PAPER_AUDIOBOOK_ADMIN_BE_APP_NAME}
+      - PAPER_AUDIOBOOK_REPO_PORT=${PAPER_AUDIOBOOK_REPO_PORT}
   paper-be:
     container_name: ${PAPER_BE}
     image: latest123/paper-be
