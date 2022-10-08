@@ -156,6 +156,7 @@ services:
       - PORT=${PAPER_AUDIOBOOK_ADMIN_BE_PORT}
       - APP_NAME=${PAPER_AUDIOBOOK_ADMIN_BE_APP_NAME}
       - PAPER_AUDIOBOOK_REPO_PORT=${PAPER_AUDIOBOOK_REPO_PORT}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
   paper-be:
     container_name: ${PAPER_BE}
     image: latest123/paper-be

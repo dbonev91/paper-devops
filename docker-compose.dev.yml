@@ -53,6 +53,7 @@ services:
       - /usr/src/app/paper-audiobook-admin-be/node_modules
     environment:
       - LINK_TO_PAPER_AUDIOBOOK_REPO=${PAPER_AUDIOBOOK_REPO_CONTAINER_NAME}
+      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
       - PROTOCOL=http
   paper-stripe-payment:
     build:
