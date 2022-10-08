@@ -140,6 +140,7 @@ services:
     environment:
       - PORT=${PAPER_AUDIOBOOK_REPO_PORT}
       - APP_NAME=${PAPER_AUDIOBOOK_REPO_APP_NAME}
+      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
   paper-audiobook-admin-be:
     container_name: ${PAPER_AUDIOBOOK_ADMIN_BE_CONTAINER_NAME}
     image: latest123/paper-audiobook-admin-be

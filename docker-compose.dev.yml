@@ -44,6 +44,8 @@ services:
     volumes:
       - ../paper-audiobook-repository:/usr/src/app/paper-audiobook-repository
       - /usr/src/app/paper-audiobook-repository/node_modules
+    environment:
+      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
   paper-audiobook-admin-be:
     build:
       args:
