@@ -115,6 +115,16 @@ services:
     environment:
       - PORT=${PAPER_EBOOK_REPO_PORT}
       - APP_NAME=${PAPER_EBOOK_REPO_APP_NAME}
+  paper-order-admin:
+    container_name: paper-order-admin
+    image: latest123/paper-order-admin
+    restart: always
+    build:
+      context: ../paper-order-admin
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+      - '../paper-order-admin/src:/usr/local/app/src'
   paper-audiobook-admin:
     container_name: paper-audiobook-admin
     image: latest123/paper-audiobook-admin
