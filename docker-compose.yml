@@ -14,8 +14,6 @@ services:
       context: ../
       args:
         - ENVIRONMENT_NAME=dev
-    ports:
-      - "8092:8092"
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot

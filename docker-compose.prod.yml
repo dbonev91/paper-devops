@@ -6,7 +6,7 @@ services:
       args:
         - ENVIRONMENT_NAME=prod
     ports:
-      - "8090:4000"
+      - "8092:4000"
     environment:
       - PORT=4000
       - NODE_ENV=production
