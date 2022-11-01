@@ -11,7 +11,7 @@ services:
     image: latest123/paper-web-app
     restart: always
     build:
-      context: ../paper
+      context: ../
       args:
         - ENVIRONMENT_NAME=dev
     ports:
@@ -19,6 +19,8 @@ services:
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
+    environment:
+      - APP_NAME=${PAPER_APP_NAME}
   paper-web-admin:
     container_name: paper-admin
     image: latest123/paper-admin

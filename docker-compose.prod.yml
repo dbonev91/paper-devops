@@ -2,12 +2,16 @@ version: "3"
 services:
   paper-web-app:
     build:
-      dockerfile: ./docker/dev/Dockerfile
+      dockerfile: ./paper/docker/dev/Dockerfile
       args:
         - ENVIRONMENT_NAME=prod
     ports:
-      - "8090:80"
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+      - "8090:4000"
+    environment:
+      - PORT=4000
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
   paper-web-admin:
     build:
       args:
