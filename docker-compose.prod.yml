@@ -26,10 +26,12 @@ services:
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   paper-raffle:
     build:
+      context: ../paper-raffle
       args:
         - ENVIRONMENT_NAME=prod
   paper-ebook-admin:
     build:
+      context: ../paper-ebook-admin
       args:
         - ENVIRONMENT_NAME=prod
       dockerfile: ./docker/dev/Dockerfile
@@ -44,6 +46,7 @@ services:
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   paper-audiobook-admin:
     build:
+      context: ../paper-audiobook-admin
       args:
         - ENVIRONMENT_NAME=prod
       dockerfile: ./docker/dev/Dockerfile
@@ -52,6 +55,7 @@ services:
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   paper-ebook-admin-be:
     build:
+      context: ../
       args:
         - ENVIRONMENT_NAME=prod
     environment:
@@ -78,8 +82,10 @@ services:
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
       - LINK_TO_PAPER_CRUD=${PROD_DOMAIN_NAME}
+      - PROTOCOL=https
   paper-audiobook-admin-be:
     build:
+      context: ../
       args:
         - ENVIRONMENT_NAME=prod
     environment:
@@ -109,6 +115,7 @@ services:
       - LINK_TO_PAPER_LOOP=${PROD_DOMAIN_NAME}
       - PROTOCOL=https
   paper-raffle-be:
+    image: latest123/paper-raffle-be
     environment:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
@@ -119,6 +126,7 @@ services:
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
   paper-mongodb-export:
+    image: latest123/paper-mongodb-export
     environment:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
