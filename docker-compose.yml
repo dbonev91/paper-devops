@@ -62,44 +62,6 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-  paper-ebook-admin:
-    container_name: paper-ebook-admin
-    image: latest123/paper-ebook-admin
-    restart: always
-    build:
-      context: ../paper-ebook-admin
-      dockerfile: ./docker/dev/Dockerfile-dev
-      args:
-        - ENVIRONMENT_NAME=dev
-    ports:
-      - "8105:4200"
-      - "8107:8099"
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-      - '../paper-ebook-admin/src:/usr/local/app/src'
-  paper-ebook-admin-be:
-    container_name: ${PAPER_EBOOK_ADMIN_BE_CONTAINER_NAME}
-    image: latest123/paper-ebook-admin-be
-    restart: always
-    build:
-      context: ../
-      dockerfile: ./paper-ebook-admin-be/docker/dev/Dockerfile
-    ports:
-      - ${PAPER_EBOOK_ADMIN_BE_PORT}:${PAPER_EBOOK_ADMIN_BE_PORT}
-    links:
-      - ${PAPER_EBOOK_REPO_CONTAINER_NAME}
-      - ${PAPER_CRUD_CONTAINER_NAME}
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-    environment:
-      - PORT=${PAPER_EBOOK_ADMIN_BE_PORT}
-      - APP_NAME=${PAPER_EBOOK_ADMIN_BE_APP_NAME}
-      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
-      - LINK_TO_PAPER_EBOOK_REPO=${PAPER_EBOOK_REPO_CONTAINER_NAME}
-      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
-      - PAPER_EBOOK_REPO_PORT=${PAPER_EBOOK_REPO_PORT}
-      - PROTOCOL=http
   paper-ebook-repository:
     container_name: ${PAPER_EBOOK_REPO_CONTAINER_NAME}
     image: latest123/paper-ebook-repository
@@ -125,16 +87,6 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
       - '../paper-order-admin/src:/usr/local/app/src'
-  paper-audiobook-admin:
-    container_name: paper-audiobook-admin
-    image: latest123/paper-audiobook-admin
-    restart: always
-    build:
-      context: ../paper-audiobook-admin
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-      - '../paper-audiobook-admin/src:/usr/local/app/src'
   paper-audiobook-repository:
     container_name: ${PAPER_AUDIOBOOK_REPO_CONTAINER_NAME}
     image: latest123/paper-audiobook-repository
@@ -150,23 +102,6 @@ services:
     environment:
       - PORT=${PAPER_AUDIOBOOK_REPO_PORT}
       - APP_NAME=${PAPER_AUDIOBOOK_REPO_APP_NAME}
-      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
-  paper-audiobook-admin-be:
-    container_name: ${PAPER_AUDIOBOOK_ADMIN_BE_CONTAINER_NAME}
-    image: latest123/paper-audiobook-admin-be
-    volumes:
-      - ./data/paper/repository/audio:/usr/src/app/paper-audiobook-admin-be/digitals
-      - ./data/certbot/conf:/etc/letsencrypt
-    restart: always
-    build:
-      context: ../
-      dockerfile: ./paper-audiobook-admin-be/docker/dev/Dockerfile
-    ports:
-      - ${PAPER_AUDIOBOOK_ADMIN_BE_PORT}:${PAPER_AUDIOBOOK_ADMIN_BE_PORT}
-    environment:
-      - PORT=${PAPER_AUDIOBOOK_ADMIN_BE_PORT}
-      - APP_NAME=${PAPER_AUDIOBOOK_ADMIN_BE_APP_NAME}
-      - PAPER_AUDIOBOOK_REPO_PORT=${PAPER_AUDIOBOOK_REPO_PORT}
       - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
   paper-be:
     container_name: ${PAPER_BE}
