@@ -2,11 +2,12 @@ version: "3"
 services:
   paper-web-app:
     build:
-      dockerfile: ./paper/docker/dev/Dockerfile-dev
+      context: ../paper
+      dockerfile: ./docker/dev/Dockerfile-dev
     volumes:
       - '../paper/src:/usr/local/app/src'
     ports:
-      - "8090:4000"
+      - "8090:4200"
   paper-email-templates:
     build:
       dockerfile: ./docker/dev/Dockerfile-dev

@@ -2,6 +2,7 @@ version: "3"
 services:
   paper-web-app:
     build:
+      context: ../
       dockerfile: ./paper/docker/dev/Dockerfile
       args:
         - ENVIRONMENT_NAME=prod
