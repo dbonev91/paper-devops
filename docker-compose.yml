@@ -289,6 +289,14 @@ services:
     environment:
       - PORT=${PAPER_CRUD_PORT}
       - APP_NAME=${PAPER_CRUD_APP_NAME}
+  paper-cdn:
+    container_name: ${PAPER_CDN_CONTAINER_NAME}
+    image: nginx:alpine
+    restart: always
+    volumes:
+      - './data/cdn/:/usr/share/nginx/html'
+    ports:
+      - '${PAPER_CDN_PORT}:80'
   mongo:
     container_name: mongo
     image: mongo
