@@ -2,7 +2,6 @@ version: "3"
 services:
   paper-web-app:
     build:
-      context: ../
       dockerfile: ./paper/docker/dev/Dockerfile
       args:
         - ENVIRONMENT_NAME=prod
@@ -159,3 +158,12 @@ services:
       - LINK_TO_PAPER_CRUD=${PROD_DOMAIN_NAME}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
       - PROTOCOL=https
+  paper-cdn:
+    volumes:
+      - ./data/cdn/nginx.conf:/etc/nginx/nginx.conf
+      - ./data/cdn/default.conf:/etc/nginx/conf.d/default.conf
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    ports:
+      - '${PAPER_CDN_PORT}:8092'
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
