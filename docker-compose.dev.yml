@@ -183,5 +183,8 @@ services:
       - ../paper-be:/usr/src/app/paper-be
       - /usr/src/app/paper-be/node_modules
   paper-cdn:
+    volumes:
+      - ./data/cdn/nginx-dev.conf:/etc/nginx/nginx.conf
+      - ./data/cdn/default-dev.conf:/etc/nginx/conf.d/default.conf
     ports:
       - '${PAPER_CDN_PORT}:80'
