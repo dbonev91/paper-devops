@@ -296,8 +296,6 @@ services:
     restart: always
     volumes:
       - './data/cdn/:/usr/share/nginx/html'
-    ports:
-      - '${PAPER_CDN_PORT}:80'
   mongo:
     container_name: mongo
     image: mongo
