@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(blurpaper.com www.blurpaper.com)
+domains=(cdn.blurpaper.com)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="team@blurpaper.com" # Adding a valid address is strongly recommended
@@ -39,7 +39,7 @@ echo
 
 
 echo "### Starting nginx ..."
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --force-recreate -d paper-certificate-issuer
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --force-recreate -d paper-certificate-issuer-cdn
 echo
 
 echo "### Deleting dummy certificate for $domains ..."
@@ -77,4 +77,4 @@ docker-compose run --rm --entrypoint "\
 echo
 
 echo "### Reloading nginx ..."
-docker-compose exec paper-certificate-issuer paper-certificate-issuer -s reload
+docker-compose exec paper-certificate-issuer-cdn paper-certificate-issuer-cdn -s reload
