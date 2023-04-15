@@ -11,7 +11,7 @@ services:
     image: latest123/paper-web-app
     restart: always
     build:
-      context: ../paper
+      context: ../
       args:
         - ENVIRONMENT_NAME=dev
     volumes:
@@ -46,22 +46,22 @@ services:
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
-  paper-raffle:
-    container_name: paper-raffle
-    image: latest123/paper-raffle
-    restart: always
-    build:
-      context: ../paper-raffle
-      dockerfile: ./docker/dev/Dockerfile
-      args:
-        - ENVIRONMENT_NAME=dev
-    ports:
-      - "8101:80"
-      - "8103:8103"
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  # paper-raffle:
+  #   container_name: paper-raffle
+  #   image: latest123/paper-raffle
+  #   restart: always
+  #   build:
+  #     context: ../paper-raffle
+  #     dockerfile: ./docker/dev/Dockerfile
+  #     args:
+  #       - ENVIRONMENT_NAME=dev
+  #   ports:
+  #     - "8101:80"
+  #     - "8103:8103"
+  #   volumes:
+  #     - ./data/certbot/conf:/etc/letsencrypt
+  #     - ./data/certbot/www:/var/www/certbot
+  #   command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   paper-ebook-repository:
     container_name: ${PAPER_EBOOK_REPO_CONTAINER_NAME}
     image: latest123/paper-ebook-repository
@@ -143,37 +143,37 @@ services:
       - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
       - LINK_TO_PAPER_LOOP=${PAPER_LOOP_CONTAINER_NAME}
       - PROTOCOL=http
-  paper-mongodb-export:
-    container_name: ${PAPER_MONGODB_EXPORT_CONTAINER_NAME}
-    image: latest123/paper-mongodb-export
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-    restart: always
-    build:
-      context: ../
-      dockerfile: ./paper-mongodb-export/docker/dev/Dockerfile
-    ports:
-      - ${PAPER_MONGODB_EXPORT_PORT}:${PAPER_MONGODB_EXPORT_PORT}
-    environment:
-      - PORT=${PAPER_MONGODB_EXPORT_PORT}
-      - APP_NAME=${PAPER_MONGODB_EXPORT_APP_NAME}
-      - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
-      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
-      - PROTOCOL=http
-  paper-raffle-be:
-    container_name: ${PAPER_RAFFLE_BE_CONTAINER_NAME}
-    image: latest123/paper-raffle-be
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-    restart: always
-    build:
-      context: ../
-      dockerfile: ./paper-raffle-be/docker/dev/Dockerfile
-    ports:
-      - ${PAPER_RAFFLE_BE_PORT}:${PAPER_RAFFLE_BE_PORT}
-    environment:
-      - PORT=${PAPER_RAFFLE_BE_PORT}
-      - APP_NAME=${PAPER_RAFFLE_BE_APP_NAME}
+  # paper-mongodb-export:
+  #   container_name: ${PAPER_MONGODB_EXPORT_CONTAINER_NAME}
+  #   image: latest123/paper-mongodb-export
+  #   volumes:
+  #     - ./data/certbot/conf:/etc/letsencrypt
+  #   restart: always
+  #   build:
+  #     context: ../
+  #     dockerfile: ./paper-mongodb-export/docker/dev/Dockerfile
+  #   ports:
+  #     - ${PAPER_MONGODB_EXPORT_PORT}:${PAPER_MONGODB_EXPORT_PORT}
+  #   environment:
+  #     - PORT=${PAPER_MONGODB_EXPORT_PORT}
+  #     - APP_NAME=${PAPER_MONGODB_EXPORT_APP_NAME}
+  #     - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
+  #     - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
+  #     - PROTOCOL=http
+  # paper-raffle-be:
+  #   container_name: ${PAPER_RAFFLE_BE_CONTAINER_NAME}
+  #   image: latest123/paper-raffle-be
+  #   volumes:
+  #     - ./data/certbot/conf:/etc/letsencrypt
+  #   restart: always
+  #   build:
+  #     context: ../
+  #     dockerfile: ./paper-raffle-be/docker/dev/Dockerfile
+  #   ports:
+  #     - ${PAPER_RAFFLE_BE_PORT}:${PAPER_RAFFLE_BE_PORT}
+  #   environment:
+  #     - PORT=${PAPER_RAFFLE_BE_PORT}
+  #     - APP_NAME=${PAPER_RAFFLE_BE_APP_NAME}
   paper-loop:
     container_name: ${PAPER_LOOP_CONTAINER_NAME}
     image: latest123/paper-loop
@@ -295,7 +295,40 @@ services:
     image: nginx:alpine
     restart: always
     volumes:
-      - './data/cdn/:/usr/share/nginx/html'
+      - ./data/cdn/nginx-cdn.conf:/etc/nginx/nginx.conf
+      - ./data/cdn/default-cdn.conf:/etc/nginx/conf.d/default.conf
+      - ./data/cdn/:/usr/share/nginx/html
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+  # To renew the certificate for blurpaper.com
+  # Go to 000-default.conf in apache server
+  # uncomment the 5025 section
+  # comment the below section
+  # in the ssh console:
+  # - service apache2 stop
+  # - service apache2 start
+  # - service apache2 restart
+  # - bash init-letsencrypt.sh
+  # rebuld the docker services
+  # in the 000-default.conf comment as the records was in the beggining
+  paper-certificate-issuer:
+    container_name: ${PAPER_CERTIFICATE_ISSUER_CONTAINER_NAME}
+    image: nginx:alpine
+    restart: always
+    volumes:
+      - ./data/cdn/nginx.conf:/etc/nginx/nginx.conf
+      - ./data/cdn/default.conf:/etc/nginx/conf.d/default.conf
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+  paper-certificate-issuer-cdn:
+    container_name: ${PAPER_CERTIFICATE_ISSUER_CDN_CONTAINER_NAME}
+    image: nginx:alpine
+    restart: always
+    volumes:
+      - ./data/cdn/nginx.conf:/etc/nginx/nginx.conf
+      - ./data/cdn/default.conf:/etc/nginx/conf.d/default.conf
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
   mongo:
     container_name: mongo
     image: mongo
