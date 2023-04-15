@@ -2,9 +2,7 @@ version: "3"
 services:
   paper-web-app:
     build:
-      dockerfile: ./paper/docker/dev/Dockerfile-dev
-      args:
-        - ENVIRONMENT_NAME=dev
+      dockerfile: ./docker/dev/Dockerfile-dev
     volumes:
       - '../paper/src:/usr/local/app/src'
     ports:
@@ -174,6 +172,15 @@ services:
     environment:
       - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
       - PROTOCOL=http
+  paper-cdn:
+    ports:
+      - ${PAPER_CDN_PORT}:8080
+  paper-certificate-issuer:
+    ports:
+      - ${PAPER_CERTIFICATE_ISSUER_PORT}:8080
+  paper-certificate-issuer-cdn:
+    ports:
+      - ${PAPER_CERTIFICATE_ISSUER_CDN_PORT}:8080
   paper-be:
     build:
       args:
@@ -181,9 +188,3 @@ services:
     volumes:
       - ../paper-be:/usr/src/app/paper-be
       - /usr/src/app/paper-be/node_modules
-  paper-cdn:
-    volumes:
-      - ./data/cdn/nginx-dev.conf:/etc/nginx/nginx.conf
-      - ./data/cdn/default-dev.conf:/etc/nginx/conf.d/default.conf
-    ports:
-      - '${PAPER_CDN_PORT}:80'
