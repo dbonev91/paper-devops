@@ -2,8 +2,7 @@ version: "3"
 services:
   paper-web-app:
     build:
-      # context: ../paper
-      dockerfile: ./docker/dev/Dockerfile-dev
+      dockerfile: ./paper/docker/dev/Dockerfile-dev
       args:
         - ENVIRONMENT_NAME=dev
     volumes:
@@ -17,15 +16,15 @@ services:
       - '../paper-email-templates/src:/usr/local/app/src'
     ports:
       - "8097:4200"
-  paper-order-admin:
-    build:
-      dockerfile: ./docker/dev/Dockerfile-dev
-      args:
-        - ENVIRONMENT_NAME=dev
-    volumes:
-      - '../paper-order-admin/src:/usr/local/app/src'
-    ports:
-      - "8113:4200"
+  # paper-order-admin:
+  #   build:
+  #     dockerfile: ./docker/dev/Dockerfile-dev
+  #     args:
+  #       - ENVIRONMENT_NAME=dev
+  #   volumes:
+  #     - '../paper-order-admin/src:/usr/local/app/src'
+  #   ports:
+  #     - "8113:4200"
   paper-audiobook-admin:
     container_name: paper-audiobook-admin
     image: latest123/paper-audiobook-admin
