@@ -310,8 +310,7 @@ services:
     image: nginx:alpine
     restart: always
     volumes:
-      - ./data/cdn/nginx-cdn.conf:/etc/nginx/nginx.conf
-      - ./data/cdn/default-cdn.conf:/etc/nginx/conf.d/default.conf
+      - ./data/cdn/nginx-cdn.conf:/etc/nginx/nginx.conf:ro
       - ./data/cdn/:/usr/share/nginx/html
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
@@ -331,8 +330,7 @@ services:
     image: nginx:alpine
     restart: always
     volumes:
-      - ./data/cdn/nginx.conf:/etc/nginx/nginx.conf
-      - ./data/cdn/default.conf:/etc/nginx/conf.d/default.conf
+      - ./data/cdn/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
   paper-certificate-issuer-cdn:
@@ -340,8 +338,7 @@ services:
     image: nginx:alpine
     restart: always
     volumes:
-      - ./data/cdn/nginx.conf:/etc/nginx/nginx.conf
-      - ./data/cdn/default.conf:/etc/nginx/conf.d/default.conf
+      - ./data/cdn/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
   mongo:
