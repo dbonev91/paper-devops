@@ -79,7 +79,11 @@ services:
       - LINK_TO_PAPER_EBOOK_REPO=${PAPER_EBOOK_REPO_CONTAINER_NAME}
       - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
       - PAPER_EBOOK_REPO_PORT=${PAPER_EBOOK_REPO_PORT}
+  paper-loop:
+    environment:
       - PROTOCOL=http
+      - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
+      - LINK_TO_PAPER_EMAIL_BE=${PAPER_EMAIL_BE_CONTAINER_NAME}
   paper-ebook-repository:
     build:
       args:
