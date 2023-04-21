@@ -186,6 +186,8 @@ services:
   paper-cdn:
     ports:
       - ${PAPER_CDN_PORT}:8080
+    volumes:
+      - ./data/cdn/nginx-cdn-dev.conf:/etc/nginx/nginx.conf:ro
   paper-certificate-issuer:
     ports:
       - ${PAPER_CERTIFICATE_ISSUER_PORT}:8080
