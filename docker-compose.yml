@@ -307,10 +307,7 @@ services:
     image: nginx:alpine
     restart: always
     volumes:
-      - ./data/cdn/nginx-cdn.conf:/etc/nginx/nginx.conf:ro
       - ./data/cdn/:/usr/share/nginx/html
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
   # To renew the certificate for blurpaper.com
   # Go to 000-default.conf in apache server
   # uncomment the 5025 section
