@@ -2,7 +2,7 @@ version: "3"
 services:
   paper-web-app:
     build:
-      dockerfile: ./paper/docker/dev/Dockerfile
+      dockerfile: ./docker/dev/Dockerfile
       args:
         - ENVIRONMENT_NAME=prod
     ports:
