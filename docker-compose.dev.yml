@@ -80,6 +80,12 @@ services:
       - PAPER_CRUD_PORT=${PAPER_CRUD_PORT}
       - PAPER_EBOOK_REPO_PORT=${PAPER_EBOOK_REPO_PORT}
   paper-loop:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-loop:/usr/src/app/paper-loop
+      - /usr/src/app/paper-loop/node_modules
     environment:
       - PROTOCOL=http
       - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
