@@ -103,6 +103,9 @@ services:
   #     - LINK_TO_PAPER_CRUD=${PROD_DOMAIN_NAME}
   #     - PROTOCOL=https
   paper-loop:
+    build:
+      args:
+        - ENVIRONMENT_NAME=prod
     environment:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
