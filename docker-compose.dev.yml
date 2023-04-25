@@ -90,6 +90,13 @@ services:
       - PROTOCOL=http
       - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
       - LINK_TO_PAPER_EMAIL_BE=${PAPER_EMAIL_BE_CONTAINER_NAME}
+  paper-pixel:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-pixel:/usr/src/app/paper-pixel
+      - /usr/src/app/paper-pixel/node_modules
   paper-ebook-repository:
     build:
       args:
