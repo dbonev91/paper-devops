@@ -23,6 +23,13 @@ services:
   #     - '../paper-order-admin/src:/usr/local/app/src'
   #   ports:
   #     - "8113:4200"
+  paper-email-be:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-email-be:/usr/src/app/paper-email-be
+      - /usr/src/app/paper-email-be/node_modules
   paper-audiobook-admin:
     container_name: paper-audiobook-admin
     image: latest123/paper-audiobook-admin
