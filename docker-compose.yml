@@ -11,7 +11,6 @@ services:
     image: latest123/paper-web-app
     restart: always
     build:
-      context: ../paper
       args:
         - ENVIRONMENT_NAME=dev
     volumes:

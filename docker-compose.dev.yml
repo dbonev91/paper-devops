@@ -2,6 +2,7 @@ version: "3"
 services:
   paper-web-app:
     build:
+      context: ../paper
       dockerfile: ./docker/dev/Dockerfile-dev
     volumes:
       - '../paper/src:/usr/local/app/src'
