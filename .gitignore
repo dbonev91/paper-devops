@@ -1,4 +1,5 @@
 data/certbot
+data/dms
 data/certificate-issuer
 data/diagnostic.data
 data/journal

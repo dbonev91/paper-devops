@@ -118,6 +118,8 @@ services:
       - PORT=${PAPER_EMAIL_SERVER_PORT}
       - SMTP_PORT=${PAPER_EMAIL_SERVER_SMTP_PORT}
       - APP_NAME=${PAPER_EMAIL_SERVER_APP_NAME}
+    links:
+      - mailserver
   paper-be:
     container_name: ${PAPER_BE}
     image: latest123/paper-be
@@ -308,6 +310,33 @@ services:
     restart: always
     volumes:
       - ./data/cdn/:/usr/share/nginx/html
+  mailserver:
+    image: docker.io/mailserver/docker-mailserver:latest
+    container_name: mailserver
+    hostname: mail
+    domainname: blurpaper.com
+    env_file: ./data/mailserver/mailserver.env
+    ports:
+      - "26:25"    # SMTP  (explicit TLS => STARTTLS)
+      - "143:143"  # IMAP4 (explicit TLS => STARTTLS)
+      - "465:465"  # ESMTP (implicit TLS)
+      - "587:587"  # ESMTP (explicit TLS => STARTTLS)
+      - "993:993"  # IMAP4 (implicit TLS)
+    volumes:
+      - ./data/dms/mail-data/:/var/mail/
+      - ./data/dms/mail-state/:/var/mail-state/
+      - ./data/dms/mail-logs/:/var/log/mail/
+      - ./data/dms/config/:/tmp/docker-mailserver/
+      - ./data/certbot/conf:/etc/letsencrypt
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    stop_grace_period: 1m
+    cap_add:
+      - NET_ADMIN
+    healthcheck:
+      test: "ss --listening --tcp | grep -P 'LISTEN.+:smtp' || exit 1"
+      timeout: 3s
+      retries: 0
   # To renew the certificate for blurpaper.com
   # Go to 000-default.conf in apache server
   # uncomment the 5025 section
