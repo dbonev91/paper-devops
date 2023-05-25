@@ -2,12 +2,9 @@ version: "3"
 services:
   paper-web-app:
     build:
-      context: ../
       dockerfile: ./paper/docker/dev/Dockerfile
       args:
         - ENVIRONMENT_NAME=prod
-    volumes:
-      - '../src:/usr/local/app/src'
     ports:
       - "8092:4000"
     environment:
@@ -79,9 +76,6 @@ services:
       - LINK_TO_PAPER_EMAIL_BE=${PROD_DOMAIN_NAME}
       - PROTOCOL=https
   paper-email-be:
-    build:
-      args:
-        - ENVIRONMENT_NAME=prod
     environment:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
