@@ -1,5 +1,4 @@
 data/certbot
-data/dms
 data/certificate-issuer
 data/diagnostic.data
 data/journal
@@ -7,6 +6,14 @@ data/mongo
 data/nginx
 data/paper
 data/WiredTiger.turtle
+
+data/dms/mail-data
+data/dms/mail-logs
+data/dms/mail-state
+data/dms/config/opendkim
+data/dms/config/dovecot-quotas.cf
+data/dms/config/postfix-accounts.cf
+
 .DS_Store
 
 *.env*

@@ -28,3 +28,15 @@ This procedure will register the certbot and insert a keys for the SSL encriptio
 # To renew the SSL certificate for the cdn.blurpaper.com subdomain then use:
 - bash init-letsencrypt-cdn.sh
 - Thant should be all. If not comment / uncomment the according sections in the 000-default.conf
+
+# To add more options for the mailserver:
+- Update: paper-devops/data/dms/config/postfix-master.cf
+- See how the syntax is written
+- Search for the property that should be added
+- See this link for more info: https://docker-mailserver.github.io/docker-mailserver/latest/config/advanced/override-defaults/postfix/
+- Search for the service and type for the property: https://www.postfix.org/qmgr.8.html
+- After add the proeprty:
+  - docker-compose down (to stop fully the mailserver)
+  - docker-compose up ... --build mailserver
+  - See is there an errors while trying to configure the server
+  - If there are some errors most probably the property is not added with the appropriate service/type
