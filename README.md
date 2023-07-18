@@ -14,6 +14,7 @@ bash> ./init-letsencrypt.sh
 This procedure will register the certbot and insert a keys for the SSL encription
 
 # To renew the SSL certificates for the blurpaper.com and www.blurpaper.com site then use:
+## Approach 1: (Unfortunetly this approach temporary doesn't work. Use the below one)
 1. Go to 000-default.conf in apache server
 2. uncomment the 5025 section
 3. comment the below sections (blurpaper.com and www.blurpaper.com)
@@ -25,9 +26,16 @@ This procedure will register the certbot and insert a keys for the SSL encriptio
   - rebuld the docker services
   - in the 000-default.conf comment as the records was in the beggining
 
+## Approach 2: (Just run "bash init-letsencrypt.sh"):
+Then add the according TXT records in the domain dns.
+This method is easier but not very easy automatable.
+
 # To renew the SSL certificate for the cdn.blurpaper.com subdomain then use:
+## Approach 1: (Currently not working):
 - bash init-letsencrypt-cdn.sh
 - Thant should be all. If not comment / uncomment the according sections in the 000-default.conf
+
+## Approach 2: (The same as above Approach 2 but run "bash cdn-letsencrypt.sh" instead)
 
 # To add more options for the mailserver:
 - Update: paper-devops/data/dms/config/postfix-master.cf
