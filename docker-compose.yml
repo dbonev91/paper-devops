@@ -304,6 +304,22 @@ services:
       - BLURPAPER_ECONT_USERNAME=${BLURPAPER_ECONT_USERNAME}
       - BLURPAPER_ECONT_PASSWORD=${BLURPAPER_ECONT_PASSWORD}
       - APP_NAME=${PAPER_SPEDITOR_ECONT_APP_NAME}
+  paper-speditor-speedy:
+    container_name: ${PAPER_SPEDITOR_SPEEDY_CONTAINER_NAME}
+    image: latest123/paper-speditor-speedy
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-speditor-speedy/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_SPEDITOR_SPEEDY_PORT}:${PAPER_SPEDITOR_SPEEDY_PORT}
+    environment:
+      - PORT=${PAPER_SPEDITOR_SPEEDY_PORT}
+      - BLURPAPER_SPEEDY_USERNAME=${BLURPAPER_SPEEDY_USERNAME}
+      - BLURPAPER_SPEEDY_PASSWORD=${BLURPAPER_SPEEDY_PASSWORD}
+      - APP_NAME=${PAPER_SPEDITOR_SPEEDY_APP_NAME}
   paper-mongodb-crud:
     container_name: ${PAPER_CRUD_CONTAINER_NAME}
     image: latest123/paper-mongodb-crud

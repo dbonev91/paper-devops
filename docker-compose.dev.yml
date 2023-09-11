@@ -213,6 +213,15 @@ services:
       - /usr/src/app/paper-speditor-econt/node_modules
     environment:
       - PROTOCOL=http
+  paper-speditor-speedy:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-speditor-speedy:/usr/src/app/paper-speditor-speedy
+      - /usr/src/app/paper-speditor-speedy/node_modules
+    environment:
+      - PROTOCOL=http
   paper-cdn:
     ports:
       - ${PAPER_CDN_PORT}:8080
