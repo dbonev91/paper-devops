@@ -204,6 +204,15 @@ services:
     environment:
       - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
       - PROTOCOL=http
+  paper-speditor-econt:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-speditor-econt:/usr/src/app/paper-speditor-econt
+      - /usr/src/app/paper-speditor-econt/node_modules
+    environment:
+      - PROTOCOL=http
   paper-cdn:
     ports:
       - ${PAPER_CDN_PORT}:8080
