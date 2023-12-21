@@ -336,6 +336,23 @@ services:
     environment:
       - PORT=${PAPER_CRUD_PORT}
       - APP_NAME=${PAPER_CRUD_APP_NAME}
+  paper-facebook-graph-api:
+    container_name: ${PAPER_FACEBOOK_GRAPH_API_CONTAINER_NAME}
+    image: latest123/paper-facebook-graph-api
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-facebook-graph-api/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_FACEBOOK_GRAPH_API_PORT}:${PAPER_FACEBOOK_GRAPH_API_PORT}
+    environment:
+      - PORT=${PAPER_FACEBOOK_GRAPH_API_PORT}
+      - APP_NAME=${PAPER_FACEBOOK_GRAPH_API_APP_NAME}
+      - ACCESS_TOKEN=${PAPER_FACEBOOK_GRAPH_API_ACCESS_TOKEN}
+      - PIXEL_ID=${PAPER_FACEBOOK_GRAPH_API_PIXEL_ID}
+      - API_VERSION=${PAPER_FACEBOOK_GRAPH_API_API_VERSION}
   paper-cdn:
     container_name: ${PAPER_CDN_CONTAINER_NAME}
     image: nginx:alpine
