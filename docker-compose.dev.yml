@@ -204,6 +204,15 @@ services:
     environment:
       - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
       - PROTOCOL=http
+  paper-facebook-graph-api:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-facebook-graph-api:/usr/src/app/paper-facebook-graph-api
+      - /usr/src/app/paper-facebook-graph-api/node_modules
+    environment:
+      - PROTOCOL=http
   paper-speditor-econt:
     build:
       args:
