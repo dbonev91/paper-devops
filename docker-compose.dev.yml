@@ -15,6 +15,15 @@ services:
       - '../paper-email-templates/src:/usr/local/app/src'
     ports:
       - "8097:4200"
+  paper-qrcode:
+    build:
+      dockerfile: ./docker/dev/Dockerfile-dev
+      args:
+        - ENVIRONMENT_NAME=dev
+    ports:
+      - "8119:4200"
+    volumes:
+      - '../paper-qrcode/src:/usr/local/app/src'
   # paper-order-admin:
   #   build:
   #     dockerfile: ./docker/dev/Dockerfile-dev
