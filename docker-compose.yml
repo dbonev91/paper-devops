@@ -362,6 +362,22 @@ services:
       - ACCESS_TOKEN=${PAPER_FACEBOOK_GRAPH_API_ACCESS_TOKEN}
       - PIXEL_ID=${PAPER_FACEBOOK_GRAPH_API_PIXEL_ID}
       - API_VERSION=${PAPER_FACEBOOK_GRAPH_API_API_VERSION}
+  paper-chatgpt:
+    container_name: ${PAPER_CHATGPT_CONTAINER_NAME}
+    image: latest123/paper-chatgpt
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-chatgpt/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_CHATGPT_PORT}:${PAPER_CHATGPT_PORT}
+    environment:
+      - PORT=${PAPER_CHATGPT_PORT}
+      - APP_NAME=${PAPER_CHATGPT_APP_NAME}
+      - API_KEY=${PAPER_CHATGPT_API_KEY}
+      - ORGANISATION=${PAPER_CHATGPT_ORGANISATION}
   paper-cdn:
     container_name: ${PAPER_CDN_CONTAINER_NAME}
     image: nginx:alpine
