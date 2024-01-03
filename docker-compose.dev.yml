@@ -222,6 +222,15 @@ services:
       - /usr/src/app/paper-facebook-graph-api/node_modules
     environment:
       - PROTOCOL=http
+  paper-chatgpt:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-chatgpt:/usr/src/app/paper-chatgpt
+      - /usr/src/app/paper-chatgpt/node_modules
+    environment:
+      - PROTOCOL=http
   paper-speditor-econt:
     build:
       args:

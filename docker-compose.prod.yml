@@ -190,6 +190,15 @@ services:
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
       - PROTOCOL=https
+  paper-chatgpt:
+    build:
+      args:
+        - ENVIRONMENT_NAME=prod
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - PROTOCOL=https
   paper-speditor-econt:
     build:
       args:
