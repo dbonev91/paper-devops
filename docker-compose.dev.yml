@@ -257,7 +257,7 @@ services:
       - ../paper-speditor-speedy:/usr/src/app/paper-speditor-speedy
       - /usr/src/app/paper-speditor-speedy/node_modules
     environment:
-      - LINK_TO_PAPER_CHATGPT=${PAPER_CHATGPT_CONTAINER_NAME}
+      - LINK_TO_PAPER_SHIPMENT_AUTOPREPARE=${PAPER_SHIPMENT_AUTOPREPARE_CONTAINER_NAME}
       - PROTOCOL=http
   paper-banking:
     build:
