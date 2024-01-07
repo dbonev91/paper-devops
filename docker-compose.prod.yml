@@ -199,6 +199,15 @@ services:
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}
       - FULL_CHAIN=${SSH_FULL_CHAIN}
       - PROTOCOL=https
+  paper-shipment-autoprepare:
+    build:
+      args:
+        - ENVIRONMENT_NAME=prod
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - PROTOCOL=https
   paper-speditor-econt:
     build:
       args:
@@ -218,6 +227,19 @@ services:
     volumes:
       - ../paper-speditor-speedy:/usr/src/app/paper-speditor-speedy
       - /usr/src/app/paper-speditor-speedy/node_modules
+    environment:
+      - NODE_ENV=production
+      - PRIVATE_KEY=${SSH_PRIVATE_KEY}
+      - FULL_CHAIN=${SSH_FULL_CHAIN}
+      - LINK_TO_PAPER_CHATGPT=${PROD_DOMAIN_NAME}
+      - PROTOCOL=https
+  paper-banking:
+    build:
+      args:
+        - ENVIRONMENT_NAME=prod
+    volumes:
+      - ../paper-banking:/usr/src/app/paper-banking
+      - /usr/src/app/paper-banking/node_modules
     environment:
       - NODE_ENV=production
       - PRIVATE_KEY=${SSH_PRIVATE_KEY}

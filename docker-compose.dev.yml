@@ -231,6 +231,15 @@ services:
       - /usr/src/app/paper-chatgpt/node_modules
     environment:
       - PROTOCOL=http
+  paper-shipment-autoprepare:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-shipment-autoprepare:/usr/src/app/paper-shipment-autoprepare
+      - /usr/src/app/paper-shipment-autoprepare/node_modules
+    environment:
+      - PROTOCOL=http
   paper-speditor-econt:
     build:
       args:
@@ -248,7 +257,21 @@ services:
       - ../paper-speditor-speedy:/usr/src/app/paper-speditor-speedy
       - /usr/src/app/paper-speditor-speedy/node_modules
     environment:
+      - LINK_TO_PAPER_CHATGPT=${PAPER_CHATGPT_CONTAINER_NAME}
       - PROTOCOL=http
+  paper-banking:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-banking:/usr/src/app/paper-banking
+      - /usr/src/app/paper-banking/node_modules
+      - ./data/certificates/qwac:/usr/src/app/paper-banking/qwac
+    environment:
+      - NODE_ENV=production
+      - PROTOCOL=https
+      - PFX=${PFX}
+      - PFX_PASS=${PFX_PASS}
   paper-cdn:
     ports:
       - ${PAPER_CDN_PORT}:8080
