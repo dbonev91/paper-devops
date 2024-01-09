@@ -408,6 +408,7 @@ services:
     environment:
       - PORT=${PAPER_SHIPMENT_AUTOPREPARE_PORT}
       - APP_NAME=${PAPER_SHIPMENT_AUTOPREPARE_APP_NAME}
+      - PAPER_CHATGPT_PORT=${PAPER_CHATGPT_PORT}
   paper-cdn:
     container_name: ${PAPER_CDN_CONTAINER_NAME}
     image: nginx:alpine

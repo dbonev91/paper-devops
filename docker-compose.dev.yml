@@ -239,6 +239,7 @@ services:
       - ../paper-shipment-autoprepare:/usr/src/app/paper-shipment-autoprepare
       - /usr/src/app/paper-shipment-autoprepare/node_modules
     environment:
+      - LINK_TO_PAPER_CHATGPT=${PAPER_CHATGPT_CONTAINER_NAME}
       - PROTOCOL=http
   paper-speditor-econt:
     build:
