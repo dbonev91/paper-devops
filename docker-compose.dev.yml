@@ -24,15 +24,15 @@ services:
       - "8119:4200"
     volumes:
       - '../paper-qrcode/src:/usr/local/app/src'
-  # paper-order-admin:
-  #   build:
-  #     dockerfile: ./docker/dev/Dockerfile-dev
-  #     args:
-  #       - ENVIRONMENT_NAME=dev
-  #   volumes:
-  #     - '../paper-order-admin/src:/usr/local/app/src'
-  #   ports:
-  #     - "8113:4200"
+  paper-order-admin:
+    build:
+      dockerfile: ./docker/dev/Dockerfile-dev
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - '../paper-order-admin/src:/usr/local/app/src'
+    ports:
+      - "8113:4200"
   paper-email-be:
     build:
       args:
@@ -107,6 +107,9 @@ services:
       - PROTOCOL=http
       - LINK_TO_PAPER_CRUD=${PAPER_CRUD_CONTAINER_NAME}
       - LINK_TO_PAPER_EMAIL_BE=${PAPER_EMAIL_BE_CONTAINER_NAME}
+      - LINK_TO_PAPER_SPEDITOR_SPEEDY=${PAPER_SPEDITOR_SPEEDY_CONTAINER_NAME}
+      - LINK_TO_PAPER_SPEDITOR_ECONT=${PAPER_SPEDITOR_ECONT_CONTAINER_NAME}
+      - LINK_TO_PAPER_BE=${PAPER_BE}
   paper-pixel:
     build:
       args:
@@ -239,6 +242,7 @@ services:
       - ../paper-shipment-autoprepare:/usr/src/app/paper-shipment-autoprepare
       - /usr/src/app/paper-shipment-autoprepare/node_modules
     environment:
+      - LINK_TO_PAPER_CHATGPT=${PAPER_CHATGPT_CONTAINER_NAME}
       - PROTOCOL=http
   paper-speditor-econt:
     build:
@@ -248,6 +252,7 @@ services:
       - ../paper-speditor-econt:/usr/src/app/paper-speditor-econt
       - /usr/src/app/paper-speditor-econt/node_modules
     environment:
+      - LINK_TO_PAPER_SHIPMENT_AUTOPREPARE=${PAPER_SHIPMENT_AUTOPREPARE_CONTAINER_NAME}
       - PROTOCOL=http
   paper-speditor-speedy:
     build:
@@ -257,7 +262,7 @@ services:
       - ../paper-speditor-speedy:/usr/src/app/paper-speditor-speedy
       - /usr/src/app/paper-speditor-speedy/node_modules
     environment:
-      - LINK_TO_PAPER_CHATGPT=${PAPER_CHATGPT_CONTAINER_NAME}
+      - LINK_TO_PAPER_SHIPMENT_AUTOPREPARE=${PAPER_SHIPMENT_AUTOPREPARE_CONTAINER_NAME}
       - PROTOCOL=http
   paper-banking:
     build:
