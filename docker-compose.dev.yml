@@ -234,6 +234,15 @@ services:
       - /usr/src/app/paper-chatgpt/node_modules
     environment:
       - PROTOCOL=http
+  paper-csv:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-csv:/usr/src/app/paper-csv
+      - /usr/src/app/paper-csv/node_modules
+    environment:
+      - PROTOCOL=http
   paper-shipment-autoprepare:
     build:
       args:

@@ -397,6 +397,20 @@ services:
       - APP_NAME=${PAPER_CHATGPT_APP_NAME}
       - API_KEY=${PAPER_CHATGPT_API_KEY}
       - ORGANISATION=${PAPER_CHATGPT_ORGANISATION}
+  paper-csv:
+    container_name: ${PAPER_CSV_CONTAINER_NAME}
+    image: latest123/paper-csv
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-csv/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_CSV_PORT}:${PAPER_CSV_PORT}
+    environment:
+      - PORT=${PAPER_CSV_PORT}
+      - APP_NAME=${PAPER_CSV_APP_NAME}
   paper-shipment-autoprepare:
     container_name: ${PAPER_SHIPMENT_AUTOPREPARE_CONTAINER_NAME}
     image: latest123/paper-shipment-autoprepare
