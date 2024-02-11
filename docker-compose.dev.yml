@@ -243,6 +243,15 @@ services:
       - /usr/src/app/paper-csv/node_modules
     environment:
       - PROTOCOL=http
+  paper-file-downloader:
+    build:
+      args:
+        - ENVIRONMENT_NAME=dev
+    volumes:
+      - ../paper-file-downloader:/usr/src/app/paper-file-downloader
+      - /usr/src/app/paper-file-downloader/node_modules
+    environment:
+      - PROTOCOL=http
   paper-shipment-autoprepare:
     build:
       args:
