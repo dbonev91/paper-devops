@@ -411,6 +411,20 @@ services:
     environment:
       - PORT=${PAPER_CSV_PORT}
       - APP_NAME=${PAPER_CSV_APP_NAME}
+  paper-file-downloader:
+    container_name: ${PAPER_FILE_DOWNLOADER_CONTAINER_NAME}
+    image: latest123/paper-file-downloader
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+    restart: always
+    build:
+      context: ../
+      dockerfile: ./paper-file-downloader/docker/dev/Dockerfile
+    ports:
+      - ${PAPER_FILE_DOWNLOADER_PORT}:${PAPER_FILE_DOWNLOADER_PORT}
+    environment:
+      - PORT=${PAPER_FILE_DOWNLOADER_PORT}
+      - APP_NAME=${PAPER_FILE_DOWNLOADER_APP_NAME}
   paper-shipment-autoprepare:
     container_name: ${PAPER_SHIPMENT_AUTOPREPARE_CONTAINER_NAME}
     image: latest123/paper-shipment-autoprepare
